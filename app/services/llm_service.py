@@ -1,5 +1,8 @@
 import os
+import logging
 from groq import Groq
+
+logger = logging.getLogger(__name__)
 
 
 class LLMService:
@@ -27,6 +30,13 @@ class LLMService:
 
         input_tokens = response.usage.prompt_tokens
         output_tokens = response.usage.completion_tokens
+
+        logger.info(
+            "LLM call complete | input_tokens=%d | output_tokens=%d | total=%d",
+            input_tokens,
+            output_tokens,
+            input_tokens + output_tokens
+        )
 
         return {
             "answer": answer,
